@@ -3,7 +3,9 @@ const app = express()
 const mongoose = require('mongoose')
 const Listing = require("./models/listing.js")
 const path = require('path');
-var methodOverride = require('method-override')
+const methodOverride = require('method-override')
+const   ejsMate = require('ejs-mate')
+
 
 // Set EJS as the templating engine
 app.set('view engine', 'ejs');
@@ -18,6 +20,11 @@ app.use(express.urlencoded({extended:true}))
 
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'))
+
+app.engine('ejs', ejsMate)
+
+// Set up the public folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 main()
     .then(() => {
@@ -80,20 +87,6 @@ app.delete("/listings/:id",async (req, res)=>{
     await Listing.findByIdAndDelete(id)
     res.redirect("/listings")
 })
-
-
-// app.get("/testListing", async (req, res) => {
-//     let sampleListing = new Listing({
-//         title: "My New villa",
-//         description: "By the beach",
-//         price: 1200,
-//         location: "Chalangute, Goa",
-//         country: "India"
-//     })
-//     await sampleListing.save()
-//     console.log("sample was saved")
-//     res.send("successful testing")
-// })
 
 app.listen(8080, () => {
     console.log("server is listening to port 8080")
