@@ -64,9 +64,9 @@ async function main() {
 main().catch(err => console.log("Database Connection Error:", err));
 
 // Root Route
-app.get("/", (req, res) => {
-    res.send("Hello, World!");
-});
+// app.get("/", (req, res) => {
+//     res.send("Hello, World!");
+// });
 
 app.use(session(sessionOptions))
 app.use(flash())

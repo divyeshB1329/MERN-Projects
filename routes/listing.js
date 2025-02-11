@@ -31,8 +31,9 @@ router
   // Update Route: Update an existing listing in the database
   .put(
     isLoggedIn,
-    validateListing,
     isOwner,
+    upload.single("listing[image]"),
+    validateListing,
     wrapAsync(listingController.updateListing)
   )
   // Delete Route: Delete an existing listing from the database
