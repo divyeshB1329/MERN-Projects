@@ -20,7 +20,6 @@ const User =require("./models/user.js")
 const userRouter = require("./routes/user.js");
 const { connect } = require('http2');
 
-// const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust"
 const dbUrl = process.env.ATLASDB_URL;
 
 
@@ -43,10 +42,6 @@ app.use(methodOverride("_method"));
 
 // Use EJS-Mate for layouts
 app.engine("ejs", ejsMate);
-
-// app.use((req, res, next)=>{
-//     res.locals.message = req.flash()
-// })
 
 
 const store = MongoStore.create({
@@ -103,16 +98,6 @@ app.use((req, res, next)=>{
     res.locals.currUser = req.user;
     next()
 })
-
-// app.get("/demouser", async (req, res)=>{
-//     let fakeUser = new User({
-//         email:"student@gmail.com",
-//         username: "delta-student"
-//     })
-
-//     let registeredUser = await User.register(fakeUser, "helloworld")
-//     res.send(registeredUser)
-// })
 
 app.use("/listings", listingRouter)
 app.use("/listings/:id/reviews", reviewRoter)
